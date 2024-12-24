@@ -34,9 +34,9 @@ model Event {
   poster      String   @db.VarChar(255)
   category_id Int
 
-  category    Category  @relation(fields: [category_id], references: [id])
-  reviews   Review[]
-  attendees Event_attended[]
+  category      Category  @relation(fields: [category_id], references: [id])
+  reviews       Review[]
+  attendees     Event_attended[]
   announcements Announcement[]
 }
 
