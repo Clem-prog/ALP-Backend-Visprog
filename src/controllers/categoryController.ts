@@ -26,7 +26,44 @@ export class CategoryController {
                 data: response
             })
         } catch (error) {
-            //pass error to middleware apparenteyly whatever that means perhaps I can learn it
+            next(error)
+        }
+    }
+
+    static async getTodo(
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ){
+        try {
+            const response = await CategoryService.getCategory(
+                Number(req.params.todoId)
+            )
+
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    static async updateCategory (
+        req: Request,
+        res: Response,
+        next: NextFunction
+    ){
+        try {
+            const request: CreateCategoryRequest = req.body as CreateCategoryRequest
+            const response = await CategoryService.update(
+                Number(req.params.categoryId), 
+                request
+            )
+
+            res.status(201).json({
+                data: response
+            })
+        } catch (error) {
             next(error)
         }
     }
