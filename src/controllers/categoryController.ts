@@ -48,7 +48,7 @@ export class CategoryController {
         }
     }
 
-    static async updateCategory (
+    static async update (
         req: Request,
         res: Response,
         next: NextFunction

@@ -10,7 +10,8 @@ publicRouter.post("/api/register", UserController.register)
 publicRouter.post("/api/login", UserController.login)
 
 // Category
-publicRouter.post("/api/category/create", CategoryController.create)
+publicRouter.post("/api/category", CategoryController.create)
+publicRouter.put("/api/category", CategoryController.update)
 publicRouter.get("/api/category/all", CategoryController.getAllCategory)
 
 // Event
@@ -22,4 +23,4 @@ publicRouter.delete("/api/events/:id", EventController.deleteEvent)
 
 
 
- "The tunnel to summer, the exit of goodbye"
+"The tunnel to summer, the exit of goodbye"
