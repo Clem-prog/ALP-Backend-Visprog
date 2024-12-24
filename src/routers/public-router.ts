@@ -7,4 +7,5 @@ export const publicRouter = express.Router()
 publicRouter.post("/api/register", UserController.register)
 publicRouter.post("/api/login", UserController.login)
 
-publicRouter.post("/api/create-category", CategoryController.create)
+publicRouter.post("/api/category/create", CategoryController.create)
+publicRouter.get("/api/category/all", CategoryController.getAllCategory)

@@ -16,4 +16,18 @@ export class CategoryController {
             next(error)
         }
     }
+
+    static async getAllCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            
+            const response: CategoryResponse[] = await CategoryService.getAllCategory()
+
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            //pass error to middleware apparenteyly whatever that means perhaps I can learn it
+            next(error)
+        }
+    }
 }

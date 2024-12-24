@@ -30,4 +30,14 @@ export class CategoryService {
 
         return toCategoryResponse(category)
     }
+
+    static async getAllCategory(): Promise<Category[]> {
+        const allCategory = await prismaClient.category.findMany({
+            orderBy: {
+                id: 'asc'
+            },
+        })
+        
+        return allCategory
+    }
 }
