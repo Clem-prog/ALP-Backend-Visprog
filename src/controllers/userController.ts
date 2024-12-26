@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { RegisterUserRequest, LoginUserRequest, UserResponse } from "../models/user-model";
+import { RegisterUserRequest, LoginUserRequest, UserResponse, AllUserResponse } from "../models/user-model";
 import { UserService } from "../services/user-service";
 import { UserRequest } from "../types/user-request";
 
@@ -17,6 +17,19 @@ export class UserController {
             next(error)
         }
     }
+
+    static async getAllUser(req: Request, res: Response, next: NextFunction) {
+            try {
+                
+                const response: AllUserResponse[] = await UserService.getAllUser()
+    
+                res.status(200).json({
+                    data: response
+                })
+            } catch (error) {
+                next(error)
+            }
+        }
 
     static async login(req: Request, res: Response, next: NextFunction) {
         try {

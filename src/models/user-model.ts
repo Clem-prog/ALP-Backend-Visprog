@@ -17,6 +17,14 @@ export interface UserResponse {
     username: string
 }
 
+export interface AllUserResponse {
+    id: number
+    username: string
+    email: string
+    password: string
+    isAdmin: boolean
+}
+
 export function toUserResponse(user: User): UserResponse {
     return {
         token: user.token ?? "",
