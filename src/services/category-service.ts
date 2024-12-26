@@ -37,7 +37,52 @@ export class CategoryService {
                 id: 'asc'
             },
         })
-        
+
         return allCategory
+    }
+
+    static async getCategory(categoryID: number): Promise<CategoryResponse> {
+        const category = await prismaClient.category.findUnique({
+            where: {
+                id: categoryID,
+            }
+        })
+
+        if (!category) {
+            throw new ResponseError(404, "Category not found!")
+        }
+
+        return category
+    }
+
+    static async update(
+        categoryId: number,
+        req: CreateCategoryRequest
+    ): Promise<string> {
+        const categoryValidation = Validation.validate(
+            CategoryValidation.CREATE,
+            req
+        )
+
+        const category = await prismaClient.category.findUnique({
+            where: {
+                id: categoryId
+            }
+        })
+
+        if (!category) {
+            throw new ResponseError(404, "Todo not found!")
+        }
+
+        await prismaClient.category.update({
+            where: {
+                id: categoryId
+            },
+            data: {
+                name: categoryValidation.name
+            }
+        })
+
+        return "Data updated successfully!"
     }
 }

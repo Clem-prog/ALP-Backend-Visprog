@@ -11,7 +11,8 @@ publicRouter.post("/api/register", UserController.register)
 publicRouter.post("/api/login", UserController.login)
 
 // Category
-publicRouter.post("/api/category/create", CategoryController.create)
+publicRouter.post("/api/category", CategoryController.create)
+publicRouter.put("/api/category", CategoryController.update)
 publicRouter.get("/api/category/all", CategoryController.getAllCategory)
 
 // Event
@@ -27,4 +28,4 @@ publicRouter.get("/api/events/:eventId/reviews", ReviewController.getReviewsByEv
 publicRouter.put("/api/reviews/:id", ReviewController.updateReview);
 publicRouter.delete("/api/reviews/:id", ReviewController.deleteReview);
 
- "The tunnel to summer, the exit of goodbye"
+"The tunnel to summer, the exit of goodbye"
