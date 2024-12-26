@@ -9,6 +9,7 @@ export const publicRouter = express.Router()
 // User
 publicRouter.post("/api/register", UserController.register)
 publicRouter.post("/api/login", UserController.login)
+publicRouter.get('/api/users', UserController.getAllUser)
 
 // Category
 publicRouter.post("/api/category", CategoryController.create)

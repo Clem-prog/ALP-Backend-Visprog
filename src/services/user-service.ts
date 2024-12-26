@@ -39,6 +39,16 @@ export class UserService {
         return toUserResponse(user)
     }
 
+    static async getAllUser(): Promise<User[]> {
+            const allUser = await prismaClient.user.findMany({
+                orderBy: {
+                    id: 'asc'
+                },
+            })
+    
+            return allUser
+        }
+
     static async login(request: LoginUserRequest): Promise<UserResponse> {
         const loginRequest = Validation.validate(UserValidation.LOGIN, request)
 
