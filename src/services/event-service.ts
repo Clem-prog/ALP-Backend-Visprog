@@ -12,6 +12,16 @@ export class EventService {
             req
         );
 
+        const title = await prismaClient.event.findFirst({
+            where: {
+                title: createReq.title
+            }
+        });
+
+        if (title) {
+            throw new ResponseError(400, 'You cannot have the same event name!');
+        }
+
         const category = await prismaClient.category.findUnique({
             where: {
                 id: createReq.category_id
