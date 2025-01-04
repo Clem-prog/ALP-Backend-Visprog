@@ -85,4 +85,22 @@ export class CategoryService {
 
         return "Data updated successfully!"
     }
+
+    static async deleteCategory(id: number): Promise<void> {
+        const existingCategory = await prismaClient.category.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        if (!existingCategory) {
+            throw new ResponseError(404, 'Category not found');
+        }
+
+        await prismaClient.category.delete({
+            where: {
+                id: id
+            }
+        });
+    }
 }
