@@ -1,12 +1,15 @@
 import { prismaClient } from "../application/database";
-import { Category } from "@prisma/client";
+import { Category, User } from "@prisma/client";
 import { ResponseError } from "../errors/response-error";
 import { CategoryResponse, CreateCategoryRequest, toCategoryResponse } from "../models/category-model";
 import { CategoryValidation } from "../validations/category-validation";
 import { Validation } from "../validations/validation";
 
 export class CategoryService {
-    static async create(req: CreateCategoryRequest): Promise<CategoryResponse> {
+    static async create(
+        user: User, 
+        req: CreateCategoryRequest
+    ): Promise<CategoryResponse> {
         const registerReq = Validation.validate(
             CategoryValidation.CREATE,
             req
@@ -24,7 +27,8 @@ export class CategoryService {
 
         const category = await prismaClient.category.create({
             data: {
-                name: registerReq.name
+                name: registerReq.name,
+                user_id: user.id
             }
         })
 

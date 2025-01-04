@@ -4,9 +4,13 @@ import { ResponseError } from "../errors/response-error";
 import { EventResponse, CreateEventRequest, toEventResponse } from "../models/event-model";
 import { EventValidation } from "../validations/event-validation";
 import { Validation } from "../validations/validation";
+import { User } from "@prisma/client";
 
 export class EventService {
-    static async create(req: CreateEventRequest): Promise<EventResponse> {
+    static async create(
+        user: User, 
+        req: CreateEventRequest
+    ): Promise<EventResponse> {
         const createReq = Validation.validate(
             EventValidation.CREATE,
             req
@@ -39,7 +43,8 @@ export class EventService {
                 location: createReq.location,
                 date: createReq.date,
                 poster: createReq.poster,
-                category_id: createReq.category_id
+                category_id: createReq.category_id,
+                user_id: user.id
             }
         });
 
@@ -80,7 +85,11 @@ export class EventService {
         return toEventResponse(event);
     }
 
-    static async updateEvent(id: number, req: CreateEventRequest): Promise<EventResponse> {
+    static async updateEvent(
+        user: User,
+        id: number, 
+        req: CreateEventRequest
+    ): Promise<EventResponse> {
         const updateReq = Validation.validate(
             EventValidation.CREATE,
             req
@@ -88,7 +97,8 @@ export class EventService {
 
         const existingEvent = await prismaClient.event.findUnique({
             where: {
-                id: id
+                id: id,
+                user_id: user.id
             }
         });
 
@@ -123,10 +133,14 @@ export class EventService {
         return toEventResponse(event);
     }
 
-    static async deleteEvent(id: number): Promise<void> {
+    static async deleteEvent(
+        user: User,
+        id: number
+    ): Promise<void> {
         const existingEvent = await prismaClient.event.findUnique({
             where: {
-                id: id
+                id: id,
+                user_id: user.id
             }
         });
 
