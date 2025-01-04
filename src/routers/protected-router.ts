@@ -4,6 +4,8 @@ import { UserController } from "../controllers/userController";
 import { CategoryController } from "../controllers/categoryController"
 import { EventController } from "../controllers/eventController" 
 import { ReviewController } from "../controllers/reviewController"
+import { AttendanceController } from "../controllers/attendanceController";
+import { AnnouncementController } from "../controllers/announcementController";
 
 export const protectedRouter = express.Router()
 protectedRouter.use(userMiddleware)
@@ -27,3 +29,11 @@ protectedRouter.post("/api/reviews", ReviewController.create);
 protectedRouter.get("/api/events/:eventId/reviews", ReviewController.getReviewsByEventId);
 protectedRouter.put("/api/reviews/:id", ReviewController.updateReview);
 protectedRouter.delete("/api/reviews/:id", ReviewController.deleteReview);
+
+// Attendance
+protectedRouter.post("/api/attendance", AttendanceController.createAttendance);
+protectedRouter.get("/api/attendance", AttendanceController.getAllAttendance);
+
+// Announcement
+protectedRouter.post("/api/announcement", AnnouncementController.createAnnouncement);
+protectedRouter.get("/api/announcement", AnnouncementController.getAllAnnouncements);
