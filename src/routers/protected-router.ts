@@ -14,8 +14,10 @@ protectedRouter.delete("/api/logout", UserController.logout)
 
 // Category
 protectedRouter.post("/api/category", CategoryController.create)
-protectedRouter.put("/api/category", CategoryController.update)
+protectedRouter.put("/api/category/:id", CategoryController.update)
+protectedRouter.put("/api/category/:id", CategoryController.delete)
 protectedRouter.get("/api/category/all", CategoryController.getAllCategory)
+protectedRouter.get("/api/category/:id", CategoryController.getCategoryById)
 
 // Event
 protectedRouter.post("/api/events", EventController.create)
