@@ -3,6 +3,8 @@ import { UserController } from "../controllers/userController"
 import { CategoryController } from "../controllers/categoryController"
 import { EventController } from "../controllers/eventController" 
 import { ReviewController } from "../controllers/reviewController"
+import { AttendanceController } from "../controllers/attendanceController"; 
+import { AnnouncementController } from "../controllers/announcementController";
 
 export const publicRouter = express.Router()
 
@@ -29,4 +31,11 @@ publicRouter.get("/api/events/:eventId/reviews", ReviewController.getReviewsByEv
 publicRouter.put("/api/reviews/:id", ReviewController.updateReview);
 publicRouter.delete("/api/reviews/:id", ReviewController.deleteReview);
 
+// Attendance routes (added)
+publicRouter.post("/api/attendance", AttendanceController.createAttendance);
+publicRouter.get("/api/attendance", AttendanceController.getAllAttendance);
+
+// Announcement routes (added)
+publicRouter.post("/api/announcement", AnnouncementController.createAnnouncement);
+publicRouter.get("/api/announcement", AnnouncementController.getAllAnnouncements);
 "The tunnel to summer, the exit of goodbye"
