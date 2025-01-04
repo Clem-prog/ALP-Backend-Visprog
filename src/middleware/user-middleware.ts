@@ -17,6 +17,8 @@ export const userMiddleware = async (
             },
         })
 
+        console.log('User :', user);
+
         if (user) {
             req.user = user
             next()

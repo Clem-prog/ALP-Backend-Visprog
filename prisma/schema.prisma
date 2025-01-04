@@ -14,26 +14,30 @@ datasource db {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  username String  @db.VarChar(100)
-  email    String  @unique @db.VarChar(150)
-  password String  @db.VarChar(100)
-  isAdmin  Boolean @default(false)
-  token    String? @db.VarChar(100)
+  id            Int     @id @default(autoincrement())
+  username      String  @db.VarChar(100)
+  email         String  @unique @db.VarChar(150)
+  password      String  @db.VarChar(100)
+  isAdmin       Boolean @default(false)
+  token         String? @db.VarChar(100)
 
-  reviewed  Review[]
-  attended  Event_attended[]
+  category      Category[]
+  events        Event[]
+  reviewed      Review[]
+  attended      Event_attended[]
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(100)
-  description String   @db.Text
-  location    String   @db.VarChar(255)
-  date        DateTime @db.Timestamp()
-  poster      String   @db.VarChar(255)
-  category_id Int
+  id            Int      @id @default(autoincrement())
+  title         String   @db.VarChar(100)
+  description   String   @db.Text
+  location      String   @db.VarChar(255)
+  date          DateTime @db.Timestamp()
+  poster        String   @db.VarChar(255)
+  category_id   Int
+  user_id       Int
 
+  user          User  @relation(fields: [user_id], references: [id])
   category      Category  @relation(fields: [category_id], references: [id])
   reviews       Review[]
   attendees     Event_attended[]
@@ -51,26 +55,29 @@ model Event_attended {
 }
 
 model Announcement {
-  id      Int @id @default(autoincrement())
-  content String @db.Text
-  date    DateTime @db.Timestamp()
+  id       Int @id @default(autoincrement())
+  content  String @db.Text
+  date     DateTime @db.Timestamp()
 
   event_id Int
   event    Event @relation(fields: [event_id], references: [id])
 }
 
 model Category {
-  id Int @id @default(autoincrement())
-  name String @db.VarChar(100)
-  events Event[]
+  id      Int @id @default(autoincrement())
+  name    String @db.VarChar(100)
+  user_id Int
+
+  user    User  @relation(fields: [user_id], references: [id])
+  events  Event[]
 }
 
 model Review {
-  id       Int   @id @default(autoincrement())
-  user_id  Int
-  event_id Int
-  rating   Int    @db.Integer
-  comment  String @db.Text
-  user     User  @relation(fields: [user_id], references: [id])
-  event    Event @relation(fields: [event_id], references: [id])
+  id        Int   @id @default(autoincrement())
+  user_id   Int
+  event_id  Int
+  rating    Int    @db.Integer
+  comment   String @db.Text
+  user      User  @relation(fields: [user_id], references: [id])
+  event     Event @relation(fields: [event_id], references: [id])
 }
