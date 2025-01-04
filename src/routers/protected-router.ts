@@ -10,13 +10,15 @@ import { AnnouncementController } from "../controllers/announcementController";
 export const protectedRouter = express.Router()
 protectedRouter.use(userMiddleware)
 
+// User
 protectedRouter.delete("/api/logout", UserController.logout)
+protectedRouter.get("/api/user/:id", UserController.getUserById)
 
 // Category
 protectedRouter.post("/api/category", CategoryController.create)
 protectedRouter.put("/api/category/:id", CategoryController.update)
 protectedRouter.put("/api/category/:id", CategoryController.delete)
-protectedRouter.get("/api/category/all", CategoryController.getAllCategory)
+protectedRouter.get("/api/category", CategoryController.getAllCategory)
 protectedRouter.get("/api/category/:id", CategoryController.getCategoryById)
 
 // Event

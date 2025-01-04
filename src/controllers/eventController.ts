@@ -1,12 +1,13 @@
 import { NextFunction, Request, Response } from "express";
 import { CreateEventRequest, EventResponse } from "../models/event-model";
 import { EventService } from "../services/event-service";
+import { UserRequest } from "../types/user-request";
 
 export class EventController {
-    static async create(req: Request, res: Response, next: NextFunction) {
+    static async create(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const request: CreateEventRequest = req.body as CreateEventRequest;
-            const response: EventResponse = await EventService.create(request);
+            const response: EventResponse = await EventService.create(req.user!, request);
 
             res.status(200).json({
                 data: response
@@ -41,11 +42,11 @@ export class EventController {
         }
     }
 
-    static async updateEvent(req: Request, res: Response, next: NextFunction) {
+    static async updateEvent(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const eventId = parseInt(req.params.id);
             const request: CreateEventRequest = req.body as CreateEventRequest;
-            const response: EventResponse = await EventService.updateEvent(eventId, request);
+            const response: EventResponse = await EventService.updateEvent(req.user!, eventId, request);
 
             res.status(200).json({
                 data: response
@@ -55,10 +56,10 @@ export class EventController {
         }
     }
 
-    static async deleteEvent(req: Request, res: Response, next: NextFunction) {
+    static async deleteEvent(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const eventId = parseInt(req.params.id);
-            await EventService.deleteEvent(eventId);
+            await EventService.deleteEvent(req.user!, eventId);
 
             res.status(200).json({
                 data: "Event deleted successfully"

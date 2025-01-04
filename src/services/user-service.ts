@@ -1,7 +1,7 @@
 import { prismaClient } from "../application/database";
 import { User } from "@prisma/client"
 import { ResponseError } from "../errors/response-error";
-import { LoginUserRequest, RegisterUserRequest, toUserResponse, UserResponse } from "../models/user-model";
+import { LoginUserRequest, RegisterUserRequest, toUserResponse, toGetUserResponse, UserResponse, AllUserResponse } from "../models/user-model";
 import { UserValidation } from "../validations/user-validation";
 import { Validation } from "../validations/validation";
 import { v4 as uuid } from "uuid"
@@ -40,19 +40,33 @@ export class UserService {
     }
 
     static async getAllUser(): Promise<User[]> {
-            const allUser = await prismaClient.user.findMany({
-                orderBy: {
-                    id: 'asc'
-                },
-            })
-    
-            return allUser
+        const allUser = await prismaClient.user.findMany({
+            orderBy: {
+                id: 'asc'
+            },
+        })
+
+        return allUser
+    }
+
+    static async getUserById(user: User): Promise<AllUserResponse> {
+        const findUser = await prismaClient.user.findUnique({
+            where: {
+                id: user.id
+            }
+        });
+
+        if (!findUser) {
+            throw new ResponseError(404, 'User not found');
         }
+
+        return toGetUserResponse(user);
+    }
 
     static async login(request: LoginUserRequest): Promise<UserResponse> {
         const loginRequest = Validation.validate(UserValidation.LOGIN, request)
 
-        let user = await prismaClient.user.findFirst ({
+        let user = await prismaClient.user.findFirst({
             where: {
                 email: loginRequest.email
             }

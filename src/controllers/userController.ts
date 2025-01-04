@@ -19,17 +19,29 @@ export class UserController {
     }
 
     static async getAllUser(req: Request, res: Response, next: NextFunction) {
-            try {
-                
-                const response: AllUserResponse[] = await UserService.getAllUser()
-    
-                res.status(200).json({
-                    data: response
-                })
-            } catch (error) {
-                next(error)
-            }
+        try {
+
+            const response: AllUserResponse[] = await UserService.getAllUser()
+
+            res.status(200).json({
+                data: response
+            })
+        } catch (error) {
+            next(error)
         }
+    }
+
+    static async getUserById(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const response: AllUserResponse = await UserService.getUserById(req.user!);
+
+            res.status(200).json({
+                data: response
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 
     static async login(req: Request, res: Response, next: NextFunction) {
         try {

@@ -14,20 +14,30 @@ export interface LoginUserRequest {
 
 export interface UserResponse {
     token?: string
-    username: string
+    isAdmin: boolean,
+    id: Number
 }
 
 export interface AllUserResponse {
-    id: number
     username: string
     email: string
     password: string
     isAdmin: boolean
 }
 
+export function toGetUserResponse(user: User): AllUserResponse {
+    return {
+        username: user.username,
+        email: user.email,
+        password: user.password,
+        isAdmin: user.isAdmin
+    }
+}
+
 export function toUserResponse(user: User): UserResponse {
     return {
         token: user.token ?? "",
-        username: user.username
+        isAdmin: user.isAdmin,
+        id: user.id
     }
 }
