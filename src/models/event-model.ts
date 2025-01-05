@@ -12,6 +12,7 @@ export interface CreateEventRequest {
 export interface EventResponse {
     id: number;
     title: string;
+    isOngoing: Boolean;
     description: string;
     location: string;
     date: Date;
@@ -23,6 +24,7 @@ export function toEventResponse(event: Event): EventResponse {
     return {
         id: event.id,
         title: event.title,
+        isOngoing: event.isOngoing,
         description: event.description,
         location: event.location,
         date: event.date,
