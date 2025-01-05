@@ -1,11 +1,12 @@
 import { prismaClient } from "../application/database";
 import { User } from "@prisma/client"
 import { ResponseError } from "../errors/response-error";
-import { LoginUserRequest, RegisterUserRequest, toUserResponse, toGetUserResponse, UserResponse, AllUserResponse } from "../models/user-model";
+import { LoginUserRequest, RegisterUserRequest, toUserResponse, toGetUserResponse, UserResponse, AllUserResponse, UpdateUserRequest } from "../models/user-model";
 import { UserValidation } from "../validations/user-validation";
 import { Validation } from "../validations/validation";
 import { v4 as uuid } from "uuid"
 import bcrypt from "bcrypt"
+import { UserRequest } from "../types/user-request";
 
 export class UserService {
     static async register(req: RegisterUserRequest): Promise<UserResponse> {
@@ -62,6 +63,38 @@ export class UserService {
 
         return toGetUserResponse(user);
     }
+
+    static async updateUser(
+            userId: number,
+            req: UpdateUserRequest
+        ): Promise<UserResponse> {
+            const updateReq = Validation.validate(
+                UserValidation.UPDATE,
+                req
+            );
+    
+            const user = await prismaClient.user.findUnique({
+                where: {
+                    id: userId
+                }
+            });
+    
+            if (!user) {
+                throw new ResponseError(404, 'User not found.');
+            }
+    
+            const userUpdate = await prismaClient.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    username: updateReq.username,
+                    email: updateReq.email
+                }
+            });
+    
+            return toUserResponse(userUpdate);
+        }
 
     static async login(request: LoginUserRequest): Promise<UserResponse> {
         const loginRequest = Validation.validate(UserValidation.LOGIN, request)
