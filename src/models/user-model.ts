@@ -12,6 +12,11 @@ export interface LoginUserRequest {
     password: string
 }
 
+export interface UpdateUserRequest {
+    email: string,
+    username: string
+}
+
 export interface UserResponse {
     token?: string
     isAdmin: boolean,
