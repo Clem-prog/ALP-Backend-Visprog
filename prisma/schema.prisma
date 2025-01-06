@@ -29,6 +29,7 @@ model User {
 
 model Event {
   id            Int      @id @default(autoincrement())
+  isOngoing     Boolean  @db.Boolean @default(true)
   title         String   @db.VarChar(100)
   description   String   @db.Text
   location      String   @db.VarChar(255)
