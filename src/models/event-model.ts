@@ -18,6 +18,7 @@ export interface EventResponse {
     date: Date;
     poster: string;
     category_id: number;
+    user_id: number;
 }
 
 export function toEventResponse(event: Event): EventResponse {
@@ -29,6 +30,7 @@ export function toEventResponse(event: Event): EventResponse {
         location: event.location,
         date: event.date,
         poster: event.poster,
-        category_id: event.category_id
+        category_id: event.category_id,
+        user_id: event.user_id
     };
 }
