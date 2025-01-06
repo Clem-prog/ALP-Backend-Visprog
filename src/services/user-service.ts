@@ -64,6 +64,20 @@ export class UserService {
         return toGetUserResponse(user);
     }
 
+    static async getEventUserById(user_id: number): Promise<AllUserResponse> {
+        const findUser = await prismaClient.user.findUnique({
+            where: {
+                id: user_id
+            }
+        });
+
+        if (!findUser) {
+            throw new ResponseError(404, 'User not found');
+        }
+
+        return toGetUserResponse(findUser);
+    }
+
     static async updateUser(
             userId: number,
             req: UpdateUserRequest
