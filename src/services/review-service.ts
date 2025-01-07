@@ -39,6 +39,7 @@ export class ReviewService {
         const review = await prismaClient.review.create({
             data: {
                 rating: createReq.rating,
+                title: createReq.title,
                 comment: createReq.comment,
                 user_id: user.id,
                 event_id: createReq.event_id
@@ -100,6 +101,7 @@ export class ReviewService {
             },
             data: {
                 rating: updateReq.rating,
+                title: updateReq.title,
                 comment: updateReq.comment
             }
         });

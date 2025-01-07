@@ -78,6 +78,7 @@ model Review {
   user_id   Int
   event_id  Int
   rating    Int    @db.Integer
+  title     String @db.Text
   comment   String @db.Text
   user      User  @relation(fields: [user_id], references: [id])
   event     Event @relation(fields: [event_id], references: [id])
