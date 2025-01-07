@@ -100,8 +100,8 @@ export class ReviewService {
                 id: id
             },
             data: {
-                title: updateReq.title,
                 rating: updateReq.rating,
+                title: updateReq.title,
                 comment: updateReq.comment
             }
         });
