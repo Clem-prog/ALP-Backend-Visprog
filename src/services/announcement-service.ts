@@ -56,7 +56,6 @@ export class AnnouncementService {
             where: { id },
             data: {
                 content: updateReq.content,
-                date: updateReq.date,
             },
         });
 

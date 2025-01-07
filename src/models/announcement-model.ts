@@ -7,8 +7,7 @@ export interface CreateAnnouncementRequest {
 }
 
 export interface updateAnnouncementRequest {
-    content: string,
-    date: string
+    content: string
 }
 
 export interface AnnouncementResponse {

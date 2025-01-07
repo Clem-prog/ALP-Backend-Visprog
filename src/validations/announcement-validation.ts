@@ -9,6 +9,5 @@ export class AnnouncementValidation {
 
     static readonly UPDATE: ZodType = z.object({
         content: z.string().min(1),
-        date: z.coerce.date(),
     });
 }
