@@ -43,6 +43,19 @@ export class UserController {
         }
     }
 
+    static async getEventUserById(req: Request, res: Response, next: NextFunction) {
+        try {
+            const user_id = parseInt(req.params.id);
+            const response: AllUserResponse = await UserService.getEventUserById(user_id);
+
+            res.status(200).json({
+                data: response
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     static async updateUser(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const userId = parseInt(req.params.id);
