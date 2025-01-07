@@ -13,8 +13,8 @@ protectedRouter.use(userMiddleware)
 // User
 protectedRouter.delete("/api/logout", UserController.logout)
 protectedRouter.get("/api/user/:id", UserController.getUserById)
+protectedRouter.get("/api/user/events/:id", UserController.getEventUserById)
 protectedRouter.put("/api/user/:id", UserController.updateUser)
-
 
 // Category
 protectedRouter.post("/api/category", CategoryController.create)

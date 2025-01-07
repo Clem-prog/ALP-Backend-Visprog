@@ -54,7 +54,7 @@ export class EventService {
     static async getAllEvents(): Promise<EventResponse[]> {
         const events = await prismaClient.event.findMany({
             orderBy: {
-                date: 'desc'
+                id: 'desc'
             },
             include: {
                 category: true,
