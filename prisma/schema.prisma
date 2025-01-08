@@ -38,11 +38,11 @@ model Event {
   category_id   Int
   user_id       Int
 
-  user          User  @relation(fields: [user_id], references: [id])
-  category      Category  @relation(fields: [category_id], references: [id])
+  user          User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  category      Category  @relation(fields: [category_id], references: [id], onDelete: Cascade)
   reviews       Review[]
-  attendees     Event_attended[]
   announcements Announcement[]
+  attendees     Event_attended[]
 }
 
 model Event_attended {
@@ -51,9 +51,10 @@ model Event_attended {
 
   user_id     Int
   event_id    Int
-  user        User  @relation(fields: [user_id], references: [id])
-  event       Event @relation(fields: [event_id], references: [id])
+  user        User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  event       Event @relation(fields: [event_id], references: [id], onDelete: Cascade)
 }
+
 
 model Announcement {
   id       Int @id @default(autoincrement())
@@ -61,16 +62,17 @@ model Announcement {
   date     DateTime @db.Timestamp()
 
   event_id Int
-  event    Event @relation(fields: [event_id], references: [id])
+  event    Event @relation(fields: [event_id], references: [id], onDelete: Cascade)
 }
+
 
 model Category {
   id      Int @id @default(autoincrement())
   name    String @db.VarChar(100)
   user_id Int
 
-  user    User  @relation(fields: [user_id], references: [id])
-  events  Event[]
+  user    User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  events  Event[] 
 }
 
 model Review {
@@ -80,6 +82,7 @@ model Review {
   rating    Int    @db.Integer
   title     String @db.Text
   comment   String @db.Text
-  user      User  @relation(fields: [user_id], references: [id])
-  event     Event @relation(fields: [event_id], references: [id])
+  user      User  @relation(fields: [user_id], references: [id], onDelete: Cascade)  // Cascade on User delete
+  event     Event @relation(fields: [event_id], references: [id], onDelete: Cascade) // Cascade on Event delete
 }
+

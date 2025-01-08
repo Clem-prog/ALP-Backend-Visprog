@@ -133,6 +133,31 @@ export class EventService {
         return toEventResponse(event);
     }
 
+    static async markEventAsCompleted(user: User, id: number): Promise<EventResponse> {
+        const existingEvent = await prismaClient.event.findUnique({
+            where: {
+                id: id,
+                user_id: user.id
+            }
+        });
+    
+        if (!existingEvent) {
+            throw new ResponseError(404, 'Event not found');
+        }
+    
+        const updatedEvent = await prismaClient.event.update({
+            where: {
+                id: id
+            },
+            data: {
+                isOngoing: false
+            }
+        });
+    
+        return toEventResponse(updatedEvent);
+    }
+    
+
     static async deleteEvent(
         user: User,
         id: number

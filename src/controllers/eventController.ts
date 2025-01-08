@@ -56,6 +56,19 @@ export class EventController {
         }
     }
 
+    static async markEventAsCompleted(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const eventId = parseInt(req.params.id);
+            const response: EventResponse = await EventService.markEventAsCompleted(req.user!, eventId);
+
+            res.status(200).json({
+                data: response
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     static async deleteEvent(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const eventId = parseInt(req.params.id);

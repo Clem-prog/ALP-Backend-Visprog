@@ -29,6 +29,7 @@ protectedRouter.get("/api/events", EventController.getAllEvents)
 protectedRouter.get("/api/events/:id", EventController.getEventById)
 protectedRouter.put("/api/events/:id", EventController.updateEvent)
 protectedRouter.delete("/api/events/:id", EventController.deleteEvent)
+protectedRouter.put("/api/events/done/:id", EventController.markEventAsCompleted)
 
 //Review
 protectedRouter.post("/api/reviews", ReviewController.create);
