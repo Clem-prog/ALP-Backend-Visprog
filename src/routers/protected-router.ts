@@ -32,7 +32,7 @@ protectedRouter.delete("/api/events/:id", EventController.deleteEvent)
 protectedRouter.put("/api/events/done/:id", EventController.markEventAsCompleted)
 
 //Review
-protectedRouter.post("/api/reviews", ReviewController.create);
+protectedRouter.post("/api/reviews", ReviewController.createReview);
 protectedRouter.get("/api/events/:eventId/reviews", ReviewController.getReviewsByEventId);
 protectedRouter.put("/api/reviews/:id", ReviewController.updateReview);
 protectedRouter.delete("/api/reviews/:id", ReviewController.deleteReview);

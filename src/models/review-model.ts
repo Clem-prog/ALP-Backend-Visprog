@@ -1,6 +1,7 @@
 import { Review } from "@prisma/client";
 
 export interface CreateReviewRequest {
+    user_id: number;
     event_id: number;
     rating: number;
     title: string;
