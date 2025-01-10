@@ -6,7 +6,7 @@ import { ReviewValidation } from "../validations/review-validation";
 import { Validation } from "../validations/validation";
 
 export class ReviewService {
-    static async create(req: CreateReviewRequest, user: User): Promise<ReviewResponse> {
+    static async createReview(req: CreateReviewRequest, user: User): Promise<ReviewResponse> {
         const createReq = Validation.validate(
             ReviewValidation.CREATE,
             req
@@ -22,13 +22,10 @@ export class ReviewService {
             throw new ResponseError(404, 'Event not found');
         }
 
-        // Check if user has already reviewed this event
         const existingReview = await prismaClient.review.findFirst({
             where: {
-                AND: [
-                    { event_id: createReq.event_id },
-                    { user_id: user.id }
-                ]
+                event_id: createReq.event_id,
+                user_id: user.id
             }
         });
 
@@ -50,22 +47,10 @@ export class ReviewService {
     }
 
     static async getReviewsByEventId(eventId: number): Promise<ReviewResponse[]> {
-        const event = await prismaClient.event.findUnique({
-            where: {
-                id: eventId
-            }
-        });
-
-        if (!event) {
-            throw new ResponseError(404, 'Event not found');
-        }
-
+        console.log("Received eventId:", eventId);
         const reviews = await prismaClient.review.findMany({
             where: {
                 event_id: eventId
-            },
-            include: {
-                user: true
             },
             orderBy: {
                 id: 'desc'
@@ -129,5 +114,15 @@ export class ReviewService {
                 id: id
             }
         });
+    }
+
+    static async getAllReviews(): Promise<ReviewResponse[]> {
+        const reviews = await prismaClient.review.findMany({
+            orderBy: {
+                id: 'desc'
+            }
+        });
+
+        return reviews
     }
 }
