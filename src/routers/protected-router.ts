@@ -11,7 +11,7 @@ export const protectedRouter = express.Router()
 protectedRouter.use(userMiddleware)
 
 // User
-protectedRouter.delete("/api/logout", UserController.logout)
+protectedRouter.post("/api/logout", UserController.logout)
 protectedRouter.get("/api/user/:id", UserController.getUserById)
 protectedRouter.get("/api/user/events/:id", UserController.getEventUserById)
 protectedRouter.put("/api/user/:id", UserController.updateUser)
@@ -29,6 +29,7 @@ protectedRouter.get("/api/events", EventController.getAllEvents)
 protectedRouter.get("/api/events/:id", EventController.getEventById)
 protectedRouter.put("/api/events/:id", EventController.updateEvent)
 protectedRouter.delete("/api/events/:id", EventController.deleteEvent)
+protectedRouter.put("/api/events/done/:id", EventController.markEventAsCompleted)
 
 //Review
 protectedRouter.post("/api/reviews", ReviewController.create);
@@ -41,5 +42,8 @@ protectedRouter.post("/api/attendance", AttendanceController.createAttendance);
 protectedRouter.get("/api/attendance", AttendanceController.getAllAttendance);
 
 // Announcement
-protectedRouter.post("/api/announcement", AnnouncementController.createAnnouncement);
-protectedRouter.get("/api/announcement", AnnouncementController.getAllAnnouncements);
+protectedRouter.post("/api/announcements", AnnouncementController.createAnnouncement);
+protectedRouter.get("/api/announcements", AnnouncementController.getAllAnnouncements);
+protectedRouter.get("/api/announcements/:id", AnnouncementController.getAnnouncementById);
+protectedRouter.put("/api/announcements/:id", AnnouncementController.updateAnnouncement);
+protectedRouter.delete("/api/announcements/:id", AnnouncementController.deleteAnnouncement);

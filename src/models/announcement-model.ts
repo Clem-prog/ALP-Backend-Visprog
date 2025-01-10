@@ -1,8 +1,13 @@
 import { Announcement } from "@prisma/client"
 
 export interface CreateAnnouncementRequest {
-    content: string
+    content: string,
+    date: string
     event_id: number
+}
+
+export interface updateAnnouncementRequest {
+    content: string
 }
 
 export interface AnnouncementResponse {
