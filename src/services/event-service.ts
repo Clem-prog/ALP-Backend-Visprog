@@ -1,5 +1,4 @@
 import { prismaClient } from "../application/database";
-import { Event } from "@prisma/client";
 import { ResponseError } from "../errors/response-error";
 import { EventResponse, CreateEventRequest, toEventResponse } from "../models/event-model";
 import { EventValidation } from "../validations/event-validation";

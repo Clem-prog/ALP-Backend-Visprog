@@ -40,6 +40,7 @@ protectedRouter.delete("/api/reviews/:id", ReviewController.deleteReview);
 // Attendance
 protectedRouter.post("/api/attendance", AttendanceController.createAttendance);
 protectedRouter.get("/api/attendance", AttendanceController.getAllAttendance);
+protectedRouter.get("/api/attendance/event/:eventId", AttendanceController.getAllEventMembers);
 
 // Announcement
 protectedRouter.post("/api/announcements", AnnouncementController.createAnnouncement);
