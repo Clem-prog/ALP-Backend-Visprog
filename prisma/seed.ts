@@ -43,9 +43,21 @@ async function main() {
   // Seed Categories
   const categories = await prisma.category.createMany({
     data: [
-      { name: 'Tech', user_id: 1 },
-      { name: 'Sports', user_id: 2 },
-      { name: 'Music', user_id: 3 },
+      { name: 'Tech' },
+      { name: 'Sports' },
+      { name: 'Music' },
+      { name: 'Health' },
+      { name: 'Travel' },
+      { name: 'Education' },
+      { name: 'Gaming' },
+      { name: 'Art' },
+      { name: 'Finance' },
+      { name: 'Movies' },
+      { name: 'Fashion' },
+      { name: 'Food' },
+      { name: 'Science' },
+      { name: 'Photography' },
+      { name: 'Lifestyle' },
     ],
   });
 
