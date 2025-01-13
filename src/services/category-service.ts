@@ -27,8 +27,7 @@ export class CategoryService {
 
         const category = await prismaClient.category.create({
             data: {
-                name: registerReq.name,
-                user_id: user.id
+                name: registerReq.name
             }
         })
 
