@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { v4 as uuid } from 'uuid';
 
 const prisma = new PrismaClient();
 
@@ -13,29 +12,29 @@ async function main() {
         email: 'john@example.com',
         password: await bcrypt.hash('password123', 10),
         isAdmin: false,
-        token: uuid(),
+        token: "",
       },
       {
         username: 'jane_smith',
         email: 'jane@example.com',
         password: await bcrypt.hash('securePass!@', 10),
         isAdmin: false,
-        token: uuid(),
+        token: "",
       },
       {
         username: 'admin_user',
         email: 'admin@example.com',
         password: await bcrypt.hash('admin123', 10),
         isAdmin: true,
-        token: uuid(),
+        token: "",
       },
-      { username: 'alice', email: 'alice@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'bob', email: 'bob@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'charlie', email: 'charlie@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'dave', email: 'dave@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'eve', email: 'eve@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'frank', email: 'frank@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
-      { username: 'grace', email: 'grace@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: uuid() },
+      { username: 'alice', email: 'alice@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'bob', email: 'bob@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'charlie', email: 'charlie@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'dave', email: 'dave@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'eve', email: 'eve@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'frank', email: 'frank@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
+      { username: 'grace', email: 'grace@example.com', password: await bcrypt.hash('pass1234', 10), isAdmin: false, token: "" },
     ],
   });
 
@@ -53,30 +52,31 @@ async function main() {
   console.log(`Seeded ${categories.count} categories`);
 
   // Seed Events
-  const events = await prisma.event.createMany({
-    data: [
-      {
-        title: 'Tech Conference 2025',
-        description: 'A gathering of tech enthusiasts.',
-        location: 'Silicon Valley, CA',
-        date: new Date('2025-05-20T10:00:00Z'),
-        poster: 'tech-conference.jpg',
-        category_id: 1,
-        user_id: 3, // admin user
-      },
-      {
-        title: 'Rock Concert',
-        description: 'An amazing rock concert with live performances.',
-        location: 'Austin, TX',
-        date: new Date('2025-06-15T20:00:00Z'),
-        poster: 'rock-concert.jpg',
-        category_id: 3,
-        user_id: 3, // admin user
-      },
-    ],
-  });
+const events = await prisma.event.createMany({
+  data: [
+    {
+      title: 'Tech Conference 2025',
+      description: 'A gathering of tech enthusiasts starting at 10:00 AM on May 20, 2025. The event will kick off with keynote speeches from industry leaders, followed by breakout sessions on AI, cloud computing, and cybersecurity. After lunch, attendees can participate in hands-on workshops and network with fellow professionals. The day will conclude with an expert panel discussion and a Q&A session.',
+      location: 'Silicon Valley, CA',
+      date: new Date('2025-05-20T10:00:00Z'),
+      poster: 'https://res.cloudinary.com/dggn8axkq/image/upload/v1736601343/event-posters/p00ls9vyqdc1bufpkqe8.jpg',
+      category_id: 1,
+      user_id: 3, // admin user
+    },
+    {
+      title: 'Rock Concert',
+      description: 'An amazing rock concert starting at 8:00 PM on June 15, 2025. Doors open at 7:00 PM for early entry, with local bands warming up the crowd. The main act will take the stage at 8:30 PM, performing a mix of classic hits and new songs. Between sets, enjoy refreshments at the concession stands and explore exclusive band merchandise. The night will close with a spectacular light show and an encore performance by the headliner.',
+      location: 'Austin, TX',
+      date: new Date('2025-06-15T20:00:00Z'),
+      poster: 'https://res.cloudinary.com/dggn8axkq/image/upload/v1736601343/event-posters/qvtyfrs5o5kuult8wrgj.jpg',
+      category_id: 3,
+      user_id: 3, // admin user
+    },
+  ],
+});
 
-  console.log(`Seeded ${events.count} events`);
+console.log(`Seeded ${events.count} events`);
+
 
   // Seed Event Attendance
   const eventAttendance = await prisma.event_attended.createMany({
@@ -109,6 +109,27 @@ async function main() {
   });
 
   console.log(`Seeded ${reviews.count} reviews`);
+
+  const announcements = await prisma.announcement.createMany({
+    data: [
+      {
+        content: `Welcome to the Tech Conference! We're thrilled to have you join us in exploring the latest innovations and advancements in the tech world. This conference brings together industry leaders, tech enthusiasts, and curious minds from around the globe to share ideas and build connections.
+  
+        Don’t forget to check out our keynote speakers and breakout sessions designed to inspire and educate. We’ve got a jam-packed schedule, so make sure to plan ahead to make the most out of this exciting event.`,
+        date: new Date('2025-05-10T12:00:00Z'),
+        event_id: 1,
+      },
+      {
+        content: `Don’t miss the opening act at 8 PM! We’re kicking off the Rock Concert with an electrifying performance by one of the hottest bands in the scene. Get ready for a night of high-energy music, incredible light shows, and an atmosphere like no other.
+  
+        Be sure to arrive early to grab your spot and soak in the pre-show buzz. The vendors are stocked with refreshments and merch, so you can fuel up and grab some goodies before the action begins!`,
+        date: new Date('2025-06-15T18:00:00Z'),
+        event_id: 2,
+      },
+    ],
+  });
+  
+  console.log(`Seeded ${announcements.count} announcements`);  
 }
 
 main()
