@@ -1,13 +1,13 @@
-import { NextFunction, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { CreateReviewRequest, ReviewResponse } from "../models/review-model";
 import { ReviewService } from "../services/review-service";
 import { UserRequest } from "../types/user-request";
 
 export class ReviewController {
-    static async create(req: UserRequest, res: Response, next: NextFunction) {
+    static async createReview(req: UserRequest, res: Response, next: NextFunction) {
         try {
             const request: CreateReviewRequest = req.body as CreateReviewRequest;
-            const response: ReviewResponse = await ReviewService.create(request, req.user!);
+            const response: ReviewResponse = await ReviewService.createReview(request, req.user!);
 
             res.status(200).json({
                 data: response
@@ -17,7 +17,7 @@ export class ReviewController {
         }
     }
 
-    static async getReviewsByEventId(req: UserRequest, res: Response, next: NextFunction) {
+    static async getReviewsByEventId(req: Request, res: Response, next: NextFunction) {
         try {
             const eventId = parseInt(req.params.eventId);
             const response: ReviewResponse[] = await ReviewService.getReviewsByEventId(eventId);
@@ -51,6 +51,18 @@ export class ReviewController {
 
             res.status(200).json({
                 data: "Review deleted successfully"
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async getAllReviews(req: UserRequest, res: Response, next: NextFunction) {
+        try {
+            const response: ReviewResponse[] = await ReviewService.getAllReviews();
+
+            res.status(200).json({
+                data: response
             });
         } catch (error) {
             next(error);

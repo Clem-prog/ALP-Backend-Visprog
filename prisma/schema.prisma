@@ -21,7 +21,6 @@ model User {
   isAdmin       Boolean @default(false)
   token         String? @db.VarChar(100)
 
-  category      Category[]
   events        Event[]
   reviewed      Review[]
   attended      Event_attended[]
@@ -69,9 +68,7 @@ model Announcement {
 model Category {
   id      Int @id @default(autoincrement())
   name    String @db.VarChar(100)
-  user_id Int
 
-  user    User  @relation(fields: [user_id], references: [id], onDelete: Cascade)
   events  Event[] 
 }
 
